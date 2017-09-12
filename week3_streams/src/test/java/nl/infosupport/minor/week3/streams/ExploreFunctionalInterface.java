@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import nl.infosupport.minor.week3.streams.functionalinterfaces.Apple;
 import nl.infosupport.minor.week3.streams.functionalinterfaces.Controller;
 import org.junit.Test;
@@ -34,6 +35,14 @@ public class ExploreFunctionalInterface {
     assertThat(resultAfterFiltering.size(), is(2));
   }
 
+  @Test
+  public void filterAppleOnWeightWithPredicate() {
+    List<Apple> resultAfterFiltering =
+        filterStockOfApplesWithPredicate(stock, apple -> apple.getWeight() > 100);
+
+    assertThat(resultAfterFiltering.size(), is(2));
+  }
+
   private List<Apple> filterStockOfApples(List<Apple> stock, Controller<Apple> controller) {
     List<Apple> resultAfterFiltering = new ArrayList<>();
 
@@ -45,5 +54,18 @@ public class ExploreFunctionalInterface {
 
     return resultAfterFiltering;
   }
+
+  private List<Apple> filterStockOfApplesWithPredicate(List<Apple> stock, Predicate<Apple> predicate) {
+    List<Apple> resultAfterFiltering = new ArrayList<>();
+
+    for (Apple apple : stock) {
+      if (predicate.test(apple)) {
+        resultAfterFiltering.add(apple);
+      }
+    }
+
+    return resultAfterFiltering;
+  }
+
 
 }
