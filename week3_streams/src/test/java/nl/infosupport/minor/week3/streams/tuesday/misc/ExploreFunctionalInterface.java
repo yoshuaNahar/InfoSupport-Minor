@@ -1,4 +1,4 @@
-package nl.infosupport.minor.week3.streams;
+package nl.infosupport.minor.week3.streams.tuesday.misc;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
-import nl.infosupport.minor.week3.streams.functionalinterfaces.Apple;
-import nl.infosupport.minor.week3.streams.functionalinterfaces.Controller;
+import nl.infosupport.minor.week3.streams._01ajava8streams.part01_01.Apple;
 import org.junit.Test;
 
 public class ExploreFunctionalInterface {
@@ -38,24 +37,12 @@ public class ExploreFunctionalInterface {
   @Test
   public void filterAppleOnWeightWithPredicate() {
     List<Apple> resultAfterFiltering =
-        filterStockOfApplesWithPredicate(stock, apple -> apple.getWeight() > 100);
+        filterStockOfApples(stock, apple -> apple.getWeight() > 100);
 
     assertThat(resultAfterFiltering.size(), is(2));
   }
 
-  private List<Apple> filterStockOfApples(List<Apple> stock, Controller<Apple> controller) {
-    List<Apple> resultAfterFiltering = new ArrayList<>();
-
-    for (Apple apple : stock) {
-      if (controller.controle(apple)) {
-        resultAfterFiltering.add(apple);
-      }
-    }
-
-    return resultAfterFiltering;
-  }
-
-  private List<Apple> filterStockOfApplesWithPredicate(List<Apple> stock, Predicate<Apple> predicate) {
+  private List<Apple> filterStockOfApples(List<Apple> stock, Predicate<Apple> predicate) {
     List<Apple> resultAfterFiltering = new ArrayList<>();
 
     for (Apple apple : stock) {
@@ -66,6 +53,5 @@ public class ExploreFunctionalInterface {
 
     return resultAfterFiltering;
   }
-
 
 }

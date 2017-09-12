@@ -1,0 +1,1 @@
+These exercises are from the .pdf Java8Minor.
