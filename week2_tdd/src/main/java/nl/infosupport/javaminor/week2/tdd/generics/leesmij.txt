@@ -1,0 +1,9 @@
+Maandag 11 September
+
+Overerving is vaak niet het antwoord voor alles.
+Het moet echt in beton gegeton zijn wanneer je inheritance gebruikt.
+
+Denk aan werkelijkheid en software.
+In veel gevallen heb je
+
+Person has a Contract, ipv Werknemer is a Tijdelijke werknemer + Vastewerknemer en daarmee verder gaan.
