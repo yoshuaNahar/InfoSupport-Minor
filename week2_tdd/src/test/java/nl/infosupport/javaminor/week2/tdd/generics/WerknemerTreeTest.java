@@ -4,7 +4,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 
-import nl.infosupport.tdd.tree.DuplicateValueException;
+import nl.infosupport.javaminor.week2.tdd.tree.DuplicateValueException;
 import org.junit.Before;
 import org.junit.Test;
 

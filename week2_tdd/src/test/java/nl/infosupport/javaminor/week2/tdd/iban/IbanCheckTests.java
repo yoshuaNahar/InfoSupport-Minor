@@ -1,6 +1,8 @@
 package nl.infosupport.javaminor.week2.tdd.iban;
 
-import org.junit.Assert;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,12 +11,12 @@ public class IbanCheckTests {
   private IbanChecker ibanChecker;
 
   @Before
-  public void SetUp() {
+  public void setUp() {
     ibanChecker = new IbanChecker();
   }
 
   @Test
-  public void CheckIbanWithTooManyCharacters() {
+  public void checkIbanWithTooManyCharacters() {
     //arrange
     String aIban = "NL14INGB00086654579";
 
@@ -22,7 +24,7 @@ public class IbanCheckTests {
     boolean result = ibanChecker.checkIbanDutch(aIban);
 
     //assert
-    Assert.assertTrue(!result);
+    assertThat(result, is(false));
   }
 
   @Test
@@ -34,7 +36,7 @@ public class IbanCheckTests {
     boolean result = ibanChecker.checkIbanDutch(aIban);
 
     //assert
-    Assert.assertTrue(!result);
+    assertThat(result, is(false));
   }
 
   @Test
@@ -46,7 +48,7 @@ public class IbanCheckTests {
     boolean result = ibanChecker.verifyIbanChecksum(aIban);
 
     //assert
-    Assert.assertTrue(result);
+    assertThat(result, is(true));
   }
 
 }

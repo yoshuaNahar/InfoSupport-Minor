@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class IbanChecker {
 
-  private static Map<String, String> LOOKUP_TABLE = new HashMap<String, String>();
+  private static Map<String, String> LOOKUP_TABLE = new HashMap<>();
 
   static {
     LOOKUP_TABLE.put("A", "10");
@@ -69,11 +69,7 @@ public class IbanChecker {
     BigInteger modulo = new BigInteger(resultString);
     BigInteger leftOver = modulo.mod(new BigInteger("97"));
 
-    if (leftOver.intValue() == 1) {
-      return true;
-    }
-
-    return false;
+    return leftOver.intValue() == 1;
   }
 
 }
