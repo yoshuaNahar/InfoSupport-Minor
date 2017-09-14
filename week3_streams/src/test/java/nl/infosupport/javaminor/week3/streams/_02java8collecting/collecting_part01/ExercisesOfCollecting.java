@@ -56,7 +56,11 @@ public class ExercisesOfCollecting {
   }
 
   @Test
-  public void goupTheEmployeesInSalaryCategories() {
+  public void groupTheEmployeesInSalaryCategories() {
+    Map<Integer, List<Employee>> employeesBySalary = employees.stream()
+        .collect(Collectors.groupingBy(employee -> (int) (employee.getSalary() / 1000)));
+
+    employeesBySalary.forEach((salaryCategory, employees) -> System.out.println(salaryCategory + " " + employees));
     //Read the readme for extra info
     //The above test is a hint on how to define the salary category.
   }

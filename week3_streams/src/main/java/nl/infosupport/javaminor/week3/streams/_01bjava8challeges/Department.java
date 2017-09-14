@@ -55,7 +55,6 @@ public class Department {
         "id=" + id +
         ", name='" + name + '\'' +
         ", location='" + location + '\'' +
-        ", employees=" + employees +
         '}';
   }
 
