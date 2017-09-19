@@ -52,13 +52,17 @@ public class StringCalculatorTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void addStringWithNegativeValueShouldGiveException() {
-    stringCalculator.add("-1");
+    stringCalculator.add("-1"); // negatives not allowed
   }
 
-  // TODO: finish!
   @Test
   public void addString123WithCustomDelimiterShouldGive6() {
     assertThat(stringCalculator.add("//;\n1;2;3"), is(6));
+  }
+
+  @Test
+  public void addString123WithOtherCustomDelimiterShouldGive6() {
+    assertThat(stringCalculator.add("//-\n1-2-3"), is(6));
   }
 
 }

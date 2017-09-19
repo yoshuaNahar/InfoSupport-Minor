@@ -9,7 +9,14 @@ public class StringCalculator {
       return 0;
     }
 
-    return Arrays.stream(numbers.split(",|\n"))
+    boolean delimiterExists = numbers.matches("//.?\n.+"); // //{1 or 0 extra}\n{1 or more}
+    String delimiter = "";
+    if (delimiterExists) {
+      delimiter = "|" + numbers.substring(2, 3);
+      numbers = numbers.substring(4);
+    }
+
+    return Arrays.stream(numbers.split(",|\n" + delimiter))
         .peek(value -> {
           if (value.isEmpty()) {
             throw new IllegalArgumentException("both delimiters after each other not allowed");
