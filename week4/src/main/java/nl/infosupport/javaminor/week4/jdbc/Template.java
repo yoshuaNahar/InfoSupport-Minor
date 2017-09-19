@@ -18,7 +18,6 @@ public class Template {
 
   public <T> List<T> selectAllFrom(String table, Mapper<T> mapper) {
     List<T> entities = new ArrayList<>();
-
     String sql = "SELECT * FROM " + table;
 
     try {
@@ -38,8 +37,9 @@ public class Template {
     return entities;
   }
 
-  public <T> T selectById(int id, String table, Mapper<T> mapper) {
-    String sql = "SELECT * FROM " + table + " WHERE " + table + "NO = ?";
+  public <T> T selectById(String sql, int id, Mapper<T> mapper) {
+    // String  = "SELECT * FROM " + table + " WHERE " + table + "NO = ?";
+    T entity = null;
 
     try {
       conn = db.getConnection();
@@ -48,9 +48,7 @@ public class Template {
       rs = ps.executeQuery();
 
       if (rs.next()) {
-        System.out.println(rs.getString("getno"));
-
-        return mapper.map(rs);
+        entity = mapper.map(rs);
       }
     } catch (SQLException e) {
       throw new RuntimeException("A problem occurred", e);
@@ -58,7 +56,7 @@ public class Template {
       db.releaseResources(conn, ps, rs);
     }
 
-    return null;
+    return entity;
   }
 
 }

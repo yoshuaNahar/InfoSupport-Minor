@@ -195,7 +195,8 @@ public class ExploreJdbc {
   @Test
   public void lookingBetterToJDBCORMAbstraction() {
 
-    Mapper<Department> departmentMapper = rs -> new Department(rs.getInt("deptno"), rs.getString("dname"), rs.getString("loc"));
+    Mapper<Department> departmentMapper = rs -> new Department(rs.getInt("deptno"),
+        rs.getString("dname"), rs.getString("loc"));
 
     String sql = "SELECT * FROM dept";
     List<Department> departments = getDepartmentsRevised(sql, departmentMapper);

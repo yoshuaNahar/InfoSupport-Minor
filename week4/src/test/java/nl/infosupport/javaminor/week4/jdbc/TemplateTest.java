@@ -25,7 +25,7 @@ public class TemplateTest {
   public void selectAllDepartments() {
     List<Department> departments = template.selectAllFrom("DEPT", departmentMapper);
 
-    assertThat(departments.size(), is(4));
+    assertThat(departments.size(), is(3));
   }
 
   @Test
@@ -37,9 +37,9 @@ public class TemplateTest {
 
   @Test
   public void selectEmployeeById() {
-    Employee employee = template.selectById(1, "EMP", employeeMapper);
+    Employee employee = template.selectById("SELECT * FROM EMP WHERE EMPNO = ?", 7369, employeeMapper);
 
-    assertThat(employee.getEmpNo(), is(1));
+    assertThat(employee.getEmpNo(), is(7369));
     assertThat(employee.geteName(), is("SMITH"));
   }
 

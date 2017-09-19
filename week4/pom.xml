@@ -18,6 +18,27 @@
       <artifactId>ojdbc7</artifactId>
       <version>12.1.0.1</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>4.3.11.RELEASE</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>spring-beans</artifactId>
+        </exclusion>
+        <exclusion>
+          <artifactId>spring-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/commons-pool/commons-pool -->
+    <!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
   </dependencies>
 
 </project>
