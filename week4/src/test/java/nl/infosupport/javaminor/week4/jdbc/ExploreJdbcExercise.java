@@ -75,8 +75,7 @@ public class ExploreJdbcExercise {
     String sql = "SELECT * FROM EMP WHERE SAL = " + salary;
     try (Connection conn = DriverManager.getConnection(url, user, password);
         PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-    ) {
+        ResultSet rs = ps.executeQuery()) {
       throw new SQLException();
     }
   }
@@ -87,6 +86,7 @@ public class ExploreJdbcExercise {
     for (int i = 0; i < 14; i++) {
       employeesResult.add(new Employee(i, null, null, 0, null, 0, 0, 0));
     }
+
     return employeesResult;
   }
 

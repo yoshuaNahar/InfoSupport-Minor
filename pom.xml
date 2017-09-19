@@ -13,6 +13,7 @@
     <module>week2_tdd</module>
     <module>week3_streams</module>
     <module>week4</module>
+    <module>week4_jpalabs</module>
   </modules>
 
   <properties>

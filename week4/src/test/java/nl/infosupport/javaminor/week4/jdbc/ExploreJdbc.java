@@ -50,14 +50,12 @@ public class ExploreJdbc {
       while (rs.next()) {
         System.out.println(rs.getString("ename"));
       }
-
     } catch (SQLException ignore) {
       //Doe dit niet
     } finally {
       try {
         connection.close();
       } catch (SQLException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
@@ -75,7 +73,6 @@ public class ExploreJdbc {
       while (rs.next()) {
         System.out.println(rs.getString("ename"));
       }
-
     } catch (SQLException sqlexception) {
       //logging
       sqlexception.printStackTrace();
@@ -83,7 +80,6 @@ public class ExploreJdbc {
       try {
         connection.close();
       } catch (SQLException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
@@ -93,6 +89,7 @@ public class ExploreJdbc {
   public void haalAlleNamenOpVanEmployeesEnSluitConnectionNetjesMaarGeefExceptionTerug()
       throws SQLException {
     Connection connection = null;
+
     try {
       connection = DriverManager.getConnection(url, user, password);
       Statement stmt = connection.createStatement();
@@ -102,7 +99,6 @@ public class ExploreJdbc {
       while (rs.next()) {
         System.out.println(rs.getString("ename"));
       }
-
     } catch (SQLException sqlexception) {
       //logging
       //Dingen opruimen
@@ -111,7 +107,6 @@ public class ExploreJdbc {
       try {
         connection.close();
       } catch (SQLException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
@@ -119,7 +114,6 @@ public class ExploreJdbc {
 
   @Test
   public void haalAlleNamenOpVanEmployeesEnSluitConnectionNetjesMaarGeefRuntimeExceptionTerug() {
-    //
     Connection connection = null;
     try {
       connection = DriverManager.getConnection(url, user, password);
@@ -130,7 +124,6 @@ public class ExploreJdbc {
       while (rs.next()) {
         System.out.println(rs.getString("ename"));
       }
-
     } catch (SQLException sqlexception) {
       //logging
       //Dingen opruimen
@@ -139,7 +132,6 @@ public class ExploreJdbc {
       try {
         connection.close();
       } catch (SQLException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
@@ -151,8 +143,7 @@ public class ExploreJdbc {
     //try with resources
     try (Connection connection = DriverManager.getConnection(url, user, password);
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);) {
-
+        ResultSet rs = stmt.executeQuery(sql)) {
       while (rs.next()) {
         System.out.println(rs.getString("ename"));
       }
@@ -170,7 +161,6 @@ public class ExploreJdbc {
     for (Department department : departments) {
       System.out.println(department);
     }
-
   }
 
   private List<Department> getDepartments() {
@@ -178,7 +168,7 @@ public class ExploreJdbc {
     List<Department> departments;
     try (Connection connection = DriverManager.getConnection(url, user, password);
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);) {
+        ResultSet rs = stmt.executeQuery(sql)) {
       departments = new ArrayList<>();
       while (rs.next()) {
         departments
@@ -189,12 +179,12 @@ public class ExploreJdbc {
       //Dingen opruimen
       throw new RuntimeException("melding", sqlexception);
     }
+
     return departments;
   }
 
   @Test
   public void lookingBetterToJDBCORMAbstraction() {
-
     Mapper<Department> departmentMapper = rs -> new Department(rs.getInt("deptno"),
         rs.getString("dname"), rs.getString("loc"));
 
@@ -204,7 +194,6 @@ public class ExploreJdbc {
     for (Department department : departments) {
       System.out.println(department);
     }
-
   }
 
   private <T> List<T> getDepartmentsRevised(String sql, Mapper<T> mapper) {
@@ -212,19 +201,18 @@ public class ExploreJdbc {
     List<T> departments;
     try (Connection connection = DriverManager.getConnection(url, user, password);
         Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);) {
+        ResultSet rs = stmt.executeQuery(sql)) {
       departments = new ArrayList<>();
       while (rs.next()) {
-
         //departments.add(new Department(rs.getInt("deptno"),rs.getString("dname"),rs.getString("loc")));
         departments.add(mapper.map(rs));
-
       }
     } catch (SQLException sqlexception) {
       //logging
       //Dingen opruimen
       throw new RuntimeException("melding", sqlexception);
     }
+
     return departments;
   }
 
