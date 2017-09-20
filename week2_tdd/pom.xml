@@ -10,6 +10,6 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>tdd</artifactId>
+  <artifactId>week2_tdd</artifactId>
 
 </project>

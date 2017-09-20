@@ -1,22 +1,20 @@
-package nl.infosupport.javaminor.week4.jdbc;
+package nl.infosupport.javaminor.week4.springjdbc;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import nl.infosupport.javaminor.week4.jpalabs.entities.Contact;
-import oracle.jdbc.driver.OracleDriver;
+import oracle.jdbc.OracleDriver;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
-
-public class ExploreJdbcTemplate {
+public class ExploreJDBCTemplate {
 
   @Test
   public void creatingJdbcTemplate() throws SQLException {
@@ -41,6 +39,7 @@ public class ExploreJdbcTemplate {
     dataSource.setUrl("jdbc:oracle:thin://localhost/xe");
     dataSource.setUsername("scott");
     dataSource.setPassword("tiger");
+
     return dataSource;
   }
 
@@ -53,7 +52,6 @@ public class ExploreJdbcTemplate {
     String sqlInsert = "INSERT INTO contact (name, email, address, telephone)"
         + " VALUES (?, ?, ?, ?)";
     jdbcTemplate.update(sqlInsert, "Tom", "tomea@mail.com", "USA", "12345");
-
   }
 
   @Test
@@ -79,11 +77,13 @@ public class ExploreJdbcTemplate {
         contact.setEmail(result.getString("email"));
         contact.setAddress(result.getString("address"));
         contact.setPhone(result.getString("telephone"));
+
         return contact;
       }
     });
 
     listContact.forEach(System.out::println);
+
     assertThat(listContact.size(), is(1));
   }
 
@@ -100,9 +100,9 @@ public class ExploreJdbcTemplate {
   public void usingRealDataSource() throws Exception {
     BasicDataSource ds = new BasicDataSource();
     ds.setDriverClassName(OracleDriver.class.getName());
-    ds.setUrl("jdbc:mysql://localhost/test");
-    ds.setUsername("cursist");
-    ds.setPassword("password");
+    ds.setUrl("jdbc:oracle:thin:@192.168.1.96:1521:xe");
+    ds.setUsername("scott");
+    ds.setPassword("tiger");
     int initialSize = 5;
     ds.setInitialSize(initialSize);
     JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
