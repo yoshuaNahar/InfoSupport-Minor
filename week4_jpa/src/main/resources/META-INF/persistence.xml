@@ -1,0 +1,44 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+	http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+  version="2.1">
+
+  <persistence-unit name="nl.infosupport.javaminor.week4.jpa.oracle">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+    <properties>
+      <!--<property name="javax.persistence.jdbc.user" value="scott" />-->
+      <!--<property name="javax.persistence.jdbc.password" value="tiger" />-->
+      <property name="javax.persistence.jdbc.user" value="YOSHUA"/>
+      <property name="javax.persistence.jdbc.password" value="YOSHUA"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.1.96:1521:xe"/>
+      <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+
+      <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <!--<property name="hibernate.use_sql_comments" value="true"/>-->
+      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+    </properties>
+  </persistence-unit>
+
+  <persistence-unit name="nl.infosupport.javaminor.week4.jpa.h2">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+    <properties>
+      <!--<property name="javax.persistence.jdbc.user" value="scott" />-->
+      <!--<property name="javax.persistence.jdbc.password" value="tiger" />-->
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.password" value="sa"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/Documents/InfoSupport-Minor/h2_embedded_db/test"/>
+      <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+
+      <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+    </properties>
+  </persistence-unit>
+
+</persistence>

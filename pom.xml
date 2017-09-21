@@ -13,7 +13,8 @@
     <module>week2_tdd</module>
     <module>week3_streams</module>
     <module>week4_jdbc</module>
-    <module>week4_jpalabs</module>
+    <module>week4_jpa</module>
+    <module>week4_spring</module>
   </modules>
 
   <properties>

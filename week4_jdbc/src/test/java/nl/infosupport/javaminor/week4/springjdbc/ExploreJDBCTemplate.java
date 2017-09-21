@@ -10,6 +10,7 @@ import java.util.List;
 import oracle.jdbc.OracleDriver;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Test;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -64,7 +65,7 @@ public class ExploreJDBCTemplate {
   }
 
   @Test
-  public void selectRowWithJdbcTemplate() throws Exception {
+  public void selectRowWithJdbcTemplate() throws DataAccessException, SQLException {
     SimpleDriverDataSource dataSource = configureDataSource();
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
@@ -88,7 +89,7 @@ public class ExploreJDBCTemplate {
   }
 
   @Test
-  public void deleteRowWithJdbcTemplate() throws Exception {
+  public void deleteRowWithJdbcTemplate() throws DataAccessException, SQLException {
     SimpleDriverDataSource dataSource = configureDataSource();
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 

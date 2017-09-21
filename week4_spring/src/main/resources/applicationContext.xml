@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="printer"
+    class="nl.infosupport.javaminor.week4.spring.springlabs.printer.ConsolePrinter"/>
+
+  <bean id="setterDI" class="nl.infosupport.javaminor.week4.spring.springlabs.SetterDI">
+    <property name="printerService" ref="printer"/>
+  </bean>
+
+  <bean id="constructorDI" class="nl.infosupport.javaminor.week4.spring.springlabs.ConstructorDI">
+    <constructor-arg ref="printer"/>
+  </bean>
+
+  <bean id="autoWiringDI" class="nl.infosupport.javaminor.week4.spring.springlabs.AutoWiringDI"
+    autowire="byType"/>
+
+  <bean id="factoryMethodInstantiation" class="nl.infosupport.javaminor.week4.spring.springlabs.FactoryMethodInstantiation"
+    factory-method="createInstance">
+    <constructor-arg index="0" ref="printer"/>
+    <constructor-arg index="1" value="MyTest"/>
+  </bean>
+
+  <bean id="nameFactory" class="nl.infosupport.javaminor.week4.spring.springlabs.NameFactory"/>
+  <bean id="names" factory-bean="nameFactory" factory-method="createNameList"/>
+
+  <bean id="hitCounter" class="nl.infosupport.javaminor.week4.spring.springlabs.others.HitCounter" scope="prototype"/>
+  <bean id="hitter1" class="nl.infosupport.javaminor.week4.spring.springlabs.others.Hitter" autowire="byType"/>
+  <bean id="hitter2" class="nl.infosupport.javaminor.week4.spring.springlabs.others.Hitter" autowire="byType"/>
+
+  <bean id="hitter3" class="nl.infosupport.javaminor.week4.spring.springlabs.others.DynamicHitter">
+    <lookup-method name="getHitCounter" bean="hitCounter"/>
+  </bean>
+
+</beans>
