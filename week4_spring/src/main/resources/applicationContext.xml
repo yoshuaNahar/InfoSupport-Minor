@@ -6,24 +6,24 @@
   <bean id="printer"
     class="nl.infosupport.javaminor.week4.spring.springlabs.printer.ConsolePrinter"/>
 
-  <bean id="setterDI" class="nl.infosupport.javaminor.week4.spring.springlabs.SetterDI">
+  <bean id="setterDI" class="nl.infosupport.javaminor.week4.spring.springlabs.xml_config.SetterDI">
     <property name="printerService" ref="printer"/>
   </bean>
 
-  <bean id="constructorDI" class="nl.infosupport.javaminor.week4.spring.springlabs.ConstructorDI">
+  <bean id="constructorDI" class="nl.infosupport.javaminor.week4.spring.springlabs.xml_config.ConstructorDI">
     <constructor-arg ref="printer"/>
   </bean>
 
-  <bean id="autoWiringDI" class="nl.infosupport.javaminor.week4.spring.springlabs.AutoWiringDI"
+  <bean id="autoWiringDI" class="nl.infosupport.javaminor.week4.spring.springlabs.xml_config.AutoWiringDI"
     autowire="byType"/>
 
-  <bean id="factoryMethodInstantiation" class="nl.infosupport.javaminor.week4.spring.springlabs.FactoryMethodInstantiation"
+  <bean id="factoryMethodInstantiation" class="nl.infosupport.javaminor.week4.spring.springlabs.xml_config.FactoryMethodInstantiation"
     factory-method="createInstance">
     <constructor-arg index="0" ref="printer"/>
     <constructor-arg index="1" value="MyTest"/>
   </bean>
 
-  <bean id="nameFactory" class="nl.infosupport.javaminor.week4.spring.springlabs.NameFactory"/>
+  <bean id="nameFactory" class="nl.infosupport.javaminor.week4.spring.springlabs.xml_config.NameFactory"/>
   <bean id="names" factory-bean="nameFactory" factory-method="createNameList"/>
 
   <bean id="hitCounter" class="nl.infosupport.javaminor.week4.spring.springlabs.others.HitCounter" scope="prototype"/>

@@ -1,4 +1,4 @@
-package nl.infosupport.javaminor.week4.spring.springlabs;
+package nl.infosupport.javaminor.week4.spring.springlabs.xml_config;
 
 import nl.infosupport.javaminor.week4.spring.springlabs.printer.PrinterService;
 

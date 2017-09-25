@@ -5,3 +5,5 @@
 
 # Used with JPA stuff
 h2_embedded_db/
+
+target/
