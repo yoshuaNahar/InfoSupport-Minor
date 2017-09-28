@@ -36,7 +36,7 @@ public class Book {
   private Category category;
 
   @OneToOne()
-  @JoinColumn(name="promotion_id", referencedColumnName="promotion_id")
+  @JoinColumn(name="promotion", referencedColumnName="promotion_id")
   private Promotion promotion;
 
   @OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST)
@@ -112,6 +112,15 @@ public class Book {
 
   public void setPromotion(Promotion promotion) {
     this.promotion = promotion;
+  }
+
+
+  public List<Review> getReviews() {
+    return reviews;
+  }
+
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
   }
 
   @Override

@@ -2,8 +2,7 @@
 *.iml
 *.idea/
 */target/
+target/
 
 # Used with JPA stuff
 h2_embedded_db/
-
-target/

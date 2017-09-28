@@ -1,47 +1,45 @@
 package com.infs.kc.scott.domain;
 
 public class SalaryGrades {
-	private int grade;
-	private double highCutoff;
-	private double lowCutoff;
-	
-	public SalaryGrades(int grade, double highCutoff, double lowCutoff) {
-		super();
-		this.grade = grade;
-		this.highCutoff = highCutoff;
-		this.lowCutoff = lowCutoff;
-	}
 
-	public int getGrade() {
-		return grade;
-	}
+  private int grade;
+  private double highCutoff;
+  private double lowCutoff;
 
-	public void setGrade(int grade) {
-		this.grade = grade;
-	}
+  public SalaryGrades(int grade, double highCutoff, double lowCutoff) {
+    this.grade = grade;
+    this.highCutoff = highCutoff;
+    this.lowCutoff = lowCutoff;
+  }
 
-	public double getHighCutoff() {
-		return highCutoff;
-	}
+  public int getGrade() {
+    return grade;
+  }
 
-	
-	public void setHighCutoff(double highCutoff) {
-		this.highCutoff = highCutoff;
-	}
+  public void setGrade(int grade) {
+    this.grade = grade;
+  }
 
-	public double getLowCutoff() {
-		return lowCutoff;
-	}
+  public double getHighCutoff() {
+    return highCutoff;
+  }
 
-	public void setLowCutoff(double lowCutoff) {
-		this.lowCutoff = lowCutoff;
-	}
+  public void setHighCutoff(double highCutoff) {
+    this.highCutoff = highCutoff;
+  }
 
-	@Override
-	public String toString() {
-		return "SalaryGrades [grade=" + grade + ", highCutoff=" + highCutoff
-				+ ", lowCutoff=" + lowCutoff + "]";
-	}
-	
-	
+  public double getLowCutoff() {
+    return lowCutoff;
+  }
+
+  public void setLowCutoff(double lowCutoff) {
+    this.lowCutoff = lowCutoff;
+  }
+
+  @Override
+  public String toString() {
+    return "SalaryGrades [grade=" + grade + ", highCutoff=" + highCutoff
+        + ", lowCutoff=" + lowCutoff + "]";
+  }
+
 }
