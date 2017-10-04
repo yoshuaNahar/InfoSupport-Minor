@@ -1,15 +1,12 @@
 package nl.infosupport.javaminor.case1.entities;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,52 +18,54 @@ public class Student {
   @Column(name = "student_id", nullable = false, insertable = false, updatable = false)
   private Long id;
 
-  @Column(name = "name", nullable = false)
-  // with updatable and insertable, eventhough they have values
-  // and you try to merge or persist, they will not!
-  // https://stackoverflow.com/questions/3805584/please-explain-about-insertable-false-updatable-false
-  private String name;
+  @Column(name = "first_name", nullable = false)
+  private String firstName;
 
-  @ElementCollection
-  @CollectionTable(
-      name = "student_books",
-      joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "student_id"))
-  @Column(name = "book")
-  private List<String> books = new ArrayList<>();
+  @Column(name = "last_name", nullable = false)
+  private String lastName;
 
-  protected Student() {
-  }
+  @ManyToMany
+  private List<CourseInstance> courseInstances;
 
-  public Student(String name) {
-    this.name = name;
+  public Student() {
   }
 
   public Long getId() {
     return id;
   }
 
-  public String getName() {
-    return name;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
-  public List<String> getBooks() {
-    return books;
+  public String getLastName() {
+    return lastName;
   }
 
-  public void setBooks(List<String> books) {
-    this.books = books;
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public List<CourseInstance> getCourseInstances() {
+    return courseInstances;
+  }
+
+  public void setCourseInstances(
+      List<CourseInstance> courseInstances) {
+    this.courseInstances = courseInstances;
   }
 
   @Override
   public String toString() {
     return "Student{" +
         "id=" + id +
-        ", name='" + name + '\'' +
-        ", books=" + books +
+        ", firstName='" + firstName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", courseInstances=" + courseInstances +
         '}';
   }
 

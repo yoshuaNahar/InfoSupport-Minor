@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Title</title>
+
+  <link rel="stylesheet" th:href="@{/resources/css/case.css}"/>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div th:insert="~{fragments/header :: header}"></div>
+  </div>
+
+  <div class="row">
+    <form method="POST" th:object="${student}" th:action="@{/cursist/toevoegen}">
+      <h3>Voeg hier een cursist toe:</h3>
+      <div class="form-group">
+        <label for="first_name">Voornaam:</label>
+        <input id="first_name" class="form-control" name="first_name" th:field="*{firstName}"/><br>
+      </div>
+      <div class="form-group">
+        <label for="last_name">Achternaam:</label>
+        <input id="last_name" class="form-control" name="last_name" th:field="*{lastName}"/><br>
+      </div>
+      <button class="btn btn-default">Opslaan</button>
+    </form>
+  </div>
+</div>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+
+<script th:href="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

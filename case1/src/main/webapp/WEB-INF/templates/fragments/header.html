@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--
+It is advised to have a head with the css and a body.
+And also add the scripts. Why?
+Because you can open this document in your browser and it just
+compiles. Unlike JSP.
+
+You can make a thymeleaf page and pass it to a frontender,
+and still looks good. JSP doesn't.....
+
+I decide not to do that, because I also use webJars and I have springloaded, so I can work
+on the frontend in my IDE with tomcat continuously running.
+-->
+<div class="navbar navbar-default" th:fragment="header">
+  <div class="navbar-header">
+    <a class="navbar-brand" th:href="@{/}">My project</a>
+  </div>
+  <div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      <li>
+        <a th:href="@{/}">Cursus overzicht</a>
+      </li>
+      <li>
+        <a th:href="@{/cursussen/toevoegen}">Cursus toevoegen</a>
+      </li>
+      <li>
+        <a th:href="@{/cursist/toevoegen}">Cursist toevoegen</a>
+      </li>
+    </ul>
+  </div>
+</div>

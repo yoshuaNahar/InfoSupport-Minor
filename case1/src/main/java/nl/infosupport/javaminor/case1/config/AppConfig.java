@@ -3,6 +3,8 @@ package nl.infosupport.javaminor.case1.config;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,22 +16,32 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.thymeleaf.ITemplateEngine;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
-@ComponentScan(basePackages = "nl.infosupport.javaminor.case1")
 @EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
-public class AppConfig extends WebMvcConfigurerAdapter {
+@ComponentScan(basePackages = "nl.infosupport.javaminor.case1")
+public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
   @Autowired
   private Environment env;
+
+  // Thymeleaf
+  private ApplicationContext applicationContext;
 
   @Bean
   public DriverManagerDataSource dataSource() {
@@ -69,15 +81,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     return txManager;
   }
 
-  @Bean
-  public ViewResolver getViewResolver() {
-    InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-    resolver.setPrefix("/WEB-INF/views/");
-    resolver.setSuffix(".html");
-
-    return resolver;
-  }
-
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     int oneYear = 31_556_926;
@@ -85,11 +88,66 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         .addResourceHandler("/resources/**")
         .addResourceLocations("/WEB-INF/resources/")
         .setCachePeriod(oneYear);
+
+    registry
+        .addResourceHandler("/webjars/**")
+        .addResourceLocations("classpath:/META-INF/resources/webjars/")
+        .setCachePeriod(oneYear);
   }
 
   @Override
   public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
     configurer.enable();
+  }
+
+  // Print files http://www.baeldung.com/spring-file-upload
+  @Bean
+  public StandardServletMultipartResolver resolver() {
+    return new StandardServletMultipartResolver();
+  }
+
+  @Bean
+  public CommonsMultipartResolver multipartResolver() {
+    CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+    multipartResolver.setMaxUploadSize(100_000);
+
+    return new CommonsMultipartResolver();
+  }
+
+  // Thymeleaf
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) {
+    this.applicationContext = applicationContext;
+  }
+
+  @Bean
+  public ViewResolver viewResolver() {
+    ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+    resolver.setTemplateEngine(templateEngine());
+    resolver.setCharacterEncoding("UTF-8");
+
+    return resolver;
+  }
+
+  @Bean
+  public ITemplateEngine templateEngine() {
+    SpringTemplateEngine engine = new SpringTemplateEngine();
+    engine.setEnableSpringELCompiler(true);
+    engine.setTemplateResolver(templateResolver());
+
+    return engine;
+  }
+
+  @Bean
+  public ITemplateResolver templateResolver() {
+    SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+    resolver.setApplicationContext(applicationContext);
+    resolver.setPrefix("/WEB-INF/templates/");
+    resolver.setSuffix(".html");
+    resolver.setTemplateMode(TemplateMode.HTML);
+    resolver.setCacheable(false); // for hotswapping
+
+    return resolver;
   }
 
 }
