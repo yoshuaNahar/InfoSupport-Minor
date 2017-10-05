@@ -25,7 +25,7 @@ public class ByteToStringConverterUTest {
 
   @Test
   public void convertByteArrayToStringWithNonEmptyByteArrayShouldReturnNonEmptyString() {
-    String convertedString = byteToStringConverter.convertByteArrayToString(new byte[] { 84 } );
+    String convertedString = byteToStringConverter.convertByteArrayToString(new byte[] {84});
 
     assertThat(convertedString.isEmpty(), is(false));
   }

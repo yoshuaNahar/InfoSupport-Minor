@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import nl.infosupport.javaminor.case1.entities.Course;
 import nl.infosupport.javaminor.case1.entities.CourseInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +20,20 @@ public class CourseInstanceDao {
   private EntityManager em;
 
   @Transactional(readOnly = true)
+  public CourseInstance getCourseInstanceById(Long courseInstanceId) {
+    CourseInstance courseInstance = em.find(CourseInstance.class, courseInstanceId);
+    courseInstance.getStudents().size();
+
+    return courseInstance;
+  }
+
+  @Transactional(readOnly = true)
   public CourseInstance getCourseInstanceByCourseIdAndStartDate(String courseCode,
       LocalDate startDate) {
     List<CourseInstance> courseInstances = em
         .createQuery("SELECT c FROM CourseInstance c"
-            + " WHERE c.course.courseCode = :courseCode AND c.startDate = :startDate", CourseInstance.class)
+                + " WHERE c.course.courseCode = :courseCode AND c.startDate = :startDate",
+            CourseInstance.class)
         .setParameter("courseCode", courseCode)
         .setParameter("startDate", startDate)
         .getResultList();
@@ -35,9 +43,15 @@ public class CourseInstanceDao {
 
   @Transactional(readOnly = true)
   public List<CourseInstance> getCoursesInstances() {
-    return em
+    List<CourseInstance> courseInstances = em
         .createQuery("SELECT c FROM CourseInstance c", CourseInstance.class)
         .getResultList();
+
+    // initialize the lazy colleciton
+    // https://stackoverflow.com/questions/15359306/how-to-load-lazy-fetched-items-from-hibernate-jpa-in-my-controller
+    courseInstances.forEach(courseInstance -> courseInstance.getStudents().size());
+
+    return courseInstances;
   }
 
   public CourseInstance saveCourseInstance(CourseInstance courseInstance) {

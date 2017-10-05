@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Title</title>
+
+  <link rel="stylesheet" th:href="@{/resources/css/case.css}"/>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div th:insert="~{fragments/header :: header}"></div>
+
+    <div th:if="${persistedStatistics}">
+      <h5>
+        Er waren <span th:text="${persistedStatistics.persistedCourses}"/> cursussen en
+        <span th:text="${persistedStatistics.persistedCoursesInstances}"/> curusinstanties
+        toegevoegd.
+      </h5>
+    </div>
+
+    <div th:if="${message}">
+      <h5 th:text="${message}"></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3>Cursus overzicht</h3>
+    <table class="table table-striped">
+      <tr>
+        <th>Start</th>
+        <th>Duur (dagen)</th>
+        <th>Titel</th>
+        <th>Cursus Code</th>
+        <th>Cursisten</th>
+        <th>Curist inschrijven</th>
+      </tr>
+      <tr th:each="courseInstance : ${coursesInstances}">
+        <td th:text="${courseInstance.startDate}"></td>
+        <td th:text="${courseInstance.course.duration}"></td>
+        <td th:text="${courseInstance.course.title}"></td>
+        <td th:text="${courseInstance.course.courseCode}"></td>
+        <!--https://stackoverflow.com/questions/43484142/how-to-print-array-size-in-thymeleaf-->
+        <td><a th:href="@{/cursussen(cursusInstantie=${courseInstance.id})}"
+               th:text="${#lists.size(courseInstance.students)}"></a></td>
+        <td><a
+            th:href="@{/cursist/inschrijven(cursusInstantie=${courseInstance.id})}">Inschrijven</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
+
+<script th:href="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

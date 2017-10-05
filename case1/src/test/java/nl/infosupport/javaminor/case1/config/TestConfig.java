@@ -52,6 +52,7 @@ public class TestConfig {
   public PlatformTransactionManager transactionManager() {
     JpaTransactionManager txManager = new JpaTransactionManager();
     txManager.setEntityManagerFactory(entityManagerFactory().getObject());
+
     return txManager;
   }
 

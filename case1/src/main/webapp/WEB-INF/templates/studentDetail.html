@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Title</title>
+
+  <link rel="stylesheet" th:href="@{/resources/css/case.css}"/>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div th:insert="~{fragments/header :: header}"></div>
+  </div>
+
+  <div class="row">
+    <h3>Student: <span th:text="${student.firstName}"></span> <span
+        th:text="${student.lastName}"></span></h3>
+    <table class="table table-striped">
+      <tr>
+        <th>Cursus Title</th>
+        <th>Cursus Code</th>
+        <th>Duur</th>
+        <th>Start</th>
+      </tr>
+      <tr th:each="courseInstance : ${courseInstances}">
+        <td th:text="${courseInstance.course.title}"></td>
+        <td th:text="${courseInstance.course.courseCode}"></td>
+        <td th:text="${courseInstance.course.duration}"></td>
+        <td th:text="${courseInstance.startDate}"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
+
+<script th:href="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

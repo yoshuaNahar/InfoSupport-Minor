@@ -20,12 +20,20 @@ public class StudentService {
     this.studentDao = studentDao;
   }
 
+  public Student getStudentById(Long studentId) {
+    return studentDao.getStudentById(studentId);
+  }
+
   public List<Student> getStudents() {
     return studentDao.getStudents();
   }
 
   public void saveStudent(Student student) {
     studentDao.saveStudent(student);
+  }
+
+  public void addCourseInstance(Student student) {
+    studentDao.mergeStudent(student);
   }
 
 }

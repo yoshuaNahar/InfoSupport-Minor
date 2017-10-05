@@ -42,9 +42,9 @@
     </dependency>
     <!-- Not using connection pools now -->
     <!--<dependency>-->
-      <!--<groupId>org.apache.commons</groupId>-->
-      <!--<artifactId>commons-dbcp2</artifactId>-->
-      <!--<version>2.1.1</version>-->
+    <!--<groupId>org.apache.commons</groupId>-->
+    <!--<artifactId>commons-dbcp2</artifactId>-->
+    <!--<version>2.1.1</version>-->
     <!--</dependency>-->
 
     <!-- View -->
@@ -57,6 +57,11 @@
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf-spring4</artifactId>
       <version>3.0.7.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-java8time</artifactId>
+      <version>3.0.0.RELEASE</version>
     </dependency>
 
     <!-- Web Jars -->
@@ -113,7 +118,7 @@
   </dependencies>
 
   <build>
-    <finalName>anApp</finalName>
+    <finalName>CAS_yn</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

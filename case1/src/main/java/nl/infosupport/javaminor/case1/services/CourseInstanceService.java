@@ -21,6 +21,12 @@ public class CourseInstanceService {
     this.courseInstanceDao = courseInstanceDao;
   }
 
+  // The courseInstanceDao.getCourseInstanceById() also gets all students
+  public CourseInstance getCourseInstanceById(Long courseInstanceId) {
+    return courseInstanceDao.getCourseInstanceById(courseInstanceId);
+  }
+
+  // The courseInstanceDao.getCoursesInstances() also gets all students
   public List<CourseInstance> getCoursesInstances() {
     return courseInstanceDao.getCoursesInstances();
   }

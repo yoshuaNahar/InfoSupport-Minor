@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>Title</title>
+
+  <link rel="stylesheet" th:href="@{/resources/css/case.css}"/>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div th:insert="~{fragments/header :: header}"></div>
+  </div>
+
+  <div class="row">
+    <h3>Cursist overzicht</h3>
+    <table class="table table-striped">
+      <tr>
+        <th>Voornaam</th>
+        <th>Achternaam</th>
+        <th>Details</th>
+      </tr>
+      <tr th:each="student : ${students}">
+        <td th:text="${student.firstName}"></td>
+        <td th:text="${student.lastName}"></td>
+        <td><a th:href="@{/cursist/detail(cursist_id=${student.id})}">Details</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <div th:insert="~{fragments/footer :: footer}"></div>
+</div>
+
+<script th:href="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+<script th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

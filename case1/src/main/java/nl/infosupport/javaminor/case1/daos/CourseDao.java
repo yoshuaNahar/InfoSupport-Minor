@@ -40,12 +40,10 @@ public class CourseDao {
         .getResultList();
   }
 
-  /*
-  https://stackoverflow.com/questions/19973277/hibernate-how-to-catch-integrity-constraint-violation-unique-constraint-or-i
-  This is happening, the Rollback exception is called in the proxy, because the actual writing
-  to the db happens in the proxy. So you will never handle the exception in here
-   */
   public Course saveCourse(Course course) {
+    // https://stackoverflow.com/questions/19973277/hibernate-how-to-catch-integrity-constraint-violation-unique-constraint-or-i
+    // This is happening, the Rollback exception is called in the proxy, because the actual writing
+    // to the db happens in the proxy. So you will never handle the exception in here
     em.persist(course);
 
     return course;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CourseInstanceController {
@@ -31,7 +32,18 @@ public class CourseInstanceController {
 
     LOG.debug("Getting coursesInstances: {}", coursesInstances);
 
-    return "viewCoursesInstances";
+    return "coursesInstances";
+  }
+
+  @GetMapping("/cursussen")
+  public String getCourseInstanceDetailsPage(@RequestParam("cursusInstantie") Long courseInstanceId,
+      Model model) {
+    LOG.info("inside getCourseInstanceDetailsPage. courseInstanceId: {}", courseInstanceId);
+    CourseInstance courseInstance = courseInstanceService.getCourseInstanceById(courseInstanceId);
+
+    model.addAttribute("courseInstance", courseInstance);
+
+    return "courseInstanceDetail";
   }
 
 }

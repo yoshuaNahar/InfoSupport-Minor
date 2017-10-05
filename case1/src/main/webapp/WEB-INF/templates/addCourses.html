@@ -17,12 +17,28 @@
 
   <div class="row">
     <form method="POST" enctype="multipart/form-data" th:action="@{/cursussen/toevoegen}">
+      <div class="from-group">
+        <label for="from">Van:</label>
+        <input id="from" class="form-control" type="date" name="from"/>
+      </div>
+      <div class="from-group">
+        <label for="to">Tot:</label>
+        <input id="to" class="form-control" type="date" name="to"/>
+      </div>
       <div class="form-group">
         <label for="file">Voeg een text bestand hier toe:</label>
-        <input id="file" class="input-form" type="file" name="file"/><br>
+        <input id="file" type="file" name="file"/>
       </div>
       <button class="btn btn-default">Opslaan</button>
     </form>
+  </div>
+
+  <div class="row">
+    <hr>
+    <p>
+      Wanneer beide datum velden niet zijn ingevuld worden alle cursussen opgeslagen.<br>
+      Pas wanneer beide velden zijn ingevuld wordt er gebruik gemaakt van de datum velden.
+    </p>
   </div>
 </div>
 

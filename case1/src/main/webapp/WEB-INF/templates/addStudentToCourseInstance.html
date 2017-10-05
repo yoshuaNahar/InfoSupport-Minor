@@ -16,24 +16,16 @@
   </div>
 
   <div class="row">
-    <form method="POST" th:action="@{/cursist/inscrhijven}">
-      <!--th:object="${student}"-->
-      <h3>Schrijf hier een cursist in voor de cursus instantie <span th:text=""></span></h3>
-
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                data-toggle="dropdown">
-          Student
-          <span class="caret"></span>
-        </button>
-      </div>
-
+    <h3>Schrijf hier een cursist in voor de cursus instantie <span
+        th:text="${courseInstance.course.title}"></span></h3>
+    <form method="POST" th:action="@{/cursist/inschrijven}">
       <div class="form-group">
+        <input th:value="${courseInstance.id}" name="course_instance_id" hidden/>
         <label for="student">Selecteer een cursist om toe te voegen:</label>
-        <select id="student" name="studentId">
+        <select id="student" class="form-control" name="student_id">
           <option th:each="student : ${students}"
                   th:value="${student.id}"
-                  th:text="${student.firstName}">
+                  th:text="${student.firstName + ' ' + student.lastName}">
           </option>
         </select>
       </div>

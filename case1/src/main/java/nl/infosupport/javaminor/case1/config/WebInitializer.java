@@ -24,6 +24,7 @@ public class WebInitializer implements WebApplicationInitializer {
     servlet.setMultipartConfig(getMultipartConfigElement());
   }
 
+  // for file upload
   private MultipartConfigElement getMultipartConfigElement() {
     String locationToSaveFile = null;
     long fileSizeOf5Mb = 5_242_880;

@@ -1,7 +1,6 @@
 package nl.infosupport.javaminor.case1.daos;
 
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import nl.infosupport.javaminor.case1.entities.Student;
@@ -18,6 +17,11 @@ public class StudentDao {
 
   @PersistenceContext
   private EntityManager em;
+
+  @Transactional(readOnly = true)
+  public Student getStudentById(Long studentId) {
+    return em.find(Student.class, studentId);
+  }
 
   @Transactional(readOnly = true)
   public List<Student> getStudents() {
@@ -38,6 +42,10 @@ public class StudentDao {
     em.persist(student);
 
     return student;
+  }
+
+  public void mergeStudent(Student student) {
+    em.merge(student);
   }
 
 }

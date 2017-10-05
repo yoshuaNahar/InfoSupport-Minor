@@ -1,8 +1,11 @@
 package nl.infosupport.javaminor.case1.entities;
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +27,8 @@ public class Student {
   @Column(name = "last_name", nullable = false)
   private String lastName;
 
-  @ManyToMany
-  private List<CourseInstance> courseInstances;
+  @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  private List<CourseInstance> courseInstances = new ArrayList<>();
 
   public Student() {
   }
