@@ -1,0 +1,63 @@
+pipeline {
+  agent any
+
+  stages {  
+    stage('Checkout') {
+	  steps {
+	    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, 
+			extensions: [[$class: 'LocalBranch', localBranch: 'master'], 
+			[$class: 'MessageExclusion', excludedMessage: '.*\\[maven-release-plugin\\].*']], 
+			submoduleCfg: [], userRemoteConfigs: [[url: 'http://yoshua-gitlab:80/root/testapp']]])
+	  }
+    }
+    
+    stage('Clean') {
+      steps {
+        sh 'mvn clean'
+      }
+    }
+    
+    stage('SonarQube analysis') {
+	  steps {
+		  withSonarQubeEnv('SonarQube') {
+		    // requires SonarQube Scanner for Maven 3.2+
+		    sh 'mvn org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true'	
+            sh 'mvn org.pitest:pitest-maven:mutationCoverage'		    	    
+  		    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar -Dsonar.pitest.mode=reuseReport'
+	  	  }
+	  }
+    }
+	
+	stage('Security analysis') {
+	  steps {
+	    sh 'mvn org.owasp:dependency-check-maven:check'
+	  }
+	}
+
+    stage('Upload artifacts') {
+	  steps {
+	    sh 'mvn deploy -Dmaven.test.skip=true -Dmaven.install.skip=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B'	
+	  }
+    } 
+  
+    stage('Docker') {
+      steps {
+	  	  sh "git rev-parse HEAD > commitid"       
+          script {
+		    commit_id = readFile('commitid').trim()
+          }
+		  sh "docker build -t 192.168.178.157:9107/testapp:latest -t 192.168.178.157:9107/testapp:'${commit_id}' ."
+		  sh "docker push 192.168.178.157:9107/testapp:'${commit_id}'"
+		  sh "docker stop yoshua-testapp || true && docker rm yoshua-testapp || true"
+		  sh "docker run -d --name yoshua-testapp -p 9108:8080 192.168.178.157:9107/testapp:latest"
+	  }
+    }
+	
+	stage('Performance analysis') {
+      steps {
+		sh 'mvn gatling:execute -Dgatling.simulationClass=gatling.BasicSimulation'
+		gatlingArchive()
+	  }
+	}	
+  }	
+}

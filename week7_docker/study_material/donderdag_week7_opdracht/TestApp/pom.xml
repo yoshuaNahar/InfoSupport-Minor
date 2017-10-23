@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.example</groupId>
+	<artifactId>TestApp</artifactId>
+	<version>1.1</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.2.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<scm>
+		<connection>scm:git:http://root:asusx52j@gitlab:80/root/testapp</connection>
+		<url>http://gitlab:80/root/testapp</url>
+	</scm>
+
+	<!-- To upload JAR artifacts to the Nexus repository  -->
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<url>http://yoshua-nexus:9181/repository/maven-releases/</url>
+		</repository>
+	</distributionManagement>
+
+	<dependencies>
+		<!-- To create a Spring Boot application with a REST endpoint -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Gatling -->
+		<dependency>
+			<groupId>io.gatling.highcharts</groupId>
+			<artifactId>gatling-charts-highcharts</artifactId>
+			<version>2.2.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Unit testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- Uses the Git commit hash as the buildNumber -->
+		<finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
+
+		<plugins>
+			<!-- To use Git commit hash in artifactname as the buildNumber -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>io.github.michaldo</groupId>
+				<artifactId>nashorn-maven-plugin</artifactId>
+				<version>0.0.1</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>eval</goal>
+						</goals>
+						<configuration>
+							<script>
+								$project.artifact.version =
+								"${project.artifact.version}-${buildNumber}";
+							</script>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Gatling -->
+			<plugin>
+				<groupId>io.gatling</groupId>
+				<artifactId>gatling-maven-plugin</artifactId>
+				<version>2.2.4</version>
+			</plugin>
+
+			<!-- PiTest -->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.2.0</version>
+				<configuration>
+					<inScopeClasses>						      
+						<param>com.example.basic.*</param>						    
+					</inScopeClasses>
+					<targetClasses>						      
+						<param>com.example.basic.*</param>						    
+					</targetClasses>
+					<outputFormats>						      
+						<outputFormat>XML</outputFormat>						    
+					</outputFormats>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+
+			<!-- To create a FAT Jar with Spring Boot -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

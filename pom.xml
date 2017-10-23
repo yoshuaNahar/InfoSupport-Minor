@@ -17,6 +17,7 @@
     <module>week4_spring</module>
     <module>week5_springjpa</module>
     <module>week5_springmvc_tomcat</module>
+    <module>week8_listsolver</module>
   </modules>
 
   <properties>
