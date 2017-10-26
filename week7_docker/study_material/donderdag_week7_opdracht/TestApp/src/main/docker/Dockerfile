@@ -1,1 +1,0 @@
-FROM anapsix/alpine-java:jre8

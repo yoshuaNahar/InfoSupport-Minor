@@ -2,7 +2,7 @@
 
 This is the first case of the InfoSupport Java Minor.
 
-#####Notes:
+##### Notes:
 Tests for the views and controllers will not 
 be written. We have not covered that part in 
 this course yet.
@@ -20,7 +20,7 @@ I am using [springloaded](https://github.com/spring-projects/spring-loaded):<br>
 Add this as a VM option
 `-javaagent:/home/yoshua/.m2/springloaded-1.2.7.RELEASE.jar -noverify`
 
-######Technology used:
+###### Technology used:
 - Spring WebMVC
 - Spring ORM
 - JPA/Hibernate 
