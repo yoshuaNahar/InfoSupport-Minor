@@ -31,7 +31,6 @@ public class AtomicityDemoTest {
 
   @Test
   public void testHitSolution2Concurrent() throws Exception {
-
     final Hitter demo = new AtomicLongDemo();
 
     runConcurrent(demo);
@@ -43,11 +42,9 @@ public class AtomicityDemoTest {
     final CountDownLatch latch = new CountDownLatch(NUMBER_OF_TASKS_EXECUTED);
     Executor exec = Executors.newFixedThreadPool(7);
 
-    Runnable task = new Runnable() {
-      public void run() {
-        demo.hit();
-        latch.countDown();
-      }
+    Runnable task = () -> {
+      demo.hit();
+      latch.countDown();
     };
 
     long time = System.currentTimeMillis();

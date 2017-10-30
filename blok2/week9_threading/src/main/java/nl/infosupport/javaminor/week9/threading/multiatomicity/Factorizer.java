@@ -1,5 +1,7 @@
 package nl.infosupport.javaminor.week9.threading.multiatomicity;
 
 public interface Factorizer {
-    Long[] factor(long number);
+
+  Long[] factor(long number);
+
 }
