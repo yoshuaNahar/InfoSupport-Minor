@@ -16,6 +16,7 @@
     <module>week8_springbootdatajpa</module>
     <module>week8_springbootrestdemo</module>
     <module>week8_aop</module>
+    <module>week9_threading</module>
   </modules>
 
   <properties>
