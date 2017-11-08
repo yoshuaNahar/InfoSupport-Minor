@@ -12,11 +12,21 @@
   <modules>
     <module>exercise1producer</module>
     <module>exercise1consumer</module>
+    <module>exercise2wqreceiver</module>
+    <module>exercise2wqsender</module>
+    <module>exec3pubsubreceiver</module>
+    <module>exec3pubsubsender</module>
+    <module>exec04routingreceiver</module>
+    <module>exec04routingsender</module>
+    <module>exec5topicreceiver</module>
+    <module>exec5topicsender</module>
   </modules>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+
+    <spring-cloud.version>Dalston.SR4</spring-cloud.version>
   </properties>
 
 </project>

@@ -11,14 +11,7 @@
   </parent>
 
   <artifactId>exercise1consumer</artifactId>
-  <name>week11_Rabbit MQ consumer demo</name>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.8</java.version>
-    <spring-cloud.version>Dalston.SR4</spring-cloud.version>
-  </properties>
+  <name>week11_RabbitMQ consumer demo</name>
 
   <dependencies>
     <dependency>
@@ -26,11 +19,12 @@
       <artifactId>spring-cloud-starter-bus-amqp</artifactId>
     </dependency>
 
-    <!--<dependency>-->
-      <!--<groupId>org.springframework.boot</groupId>-->
-      <!--<artifactId>spring-boot-starter-test</artifactId>-->
-      <!--<scope>test</scope>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>1.5.8.RELEASE</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
@@ -44,15 +38,5 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
 
 </project>

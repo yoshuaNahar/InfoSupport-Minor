@@ -17,6 +17,7 @@
     <module>week8_springbootrestdemo</module>
     <module>week8_aop</module>
     <module>week9_threading</module>
+    <module>week10_mastersofjava_demo</module>
   </modules>
 
   <properties>
