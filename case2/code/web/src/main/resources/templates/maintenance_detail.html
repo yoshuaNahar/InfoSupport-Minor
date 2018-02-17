@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="nl">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Yoboid: Onderhoud</title>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet"
+        href="../static/style/style.css"
+        th:href="@{style/style.css}"/>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:include="fragments/header :: menu"></div>
+
+<div class="container">
+  <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+  <!-- Used for Flash attribute inside vehicle post method -->
+  <div class="alert alert-danger" th:if="${message != null}" role="alert">
+    <span th:text="${message}">alert message here</span>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="well">
+        <h3>Onderhoud Detail</h3>
+        <table class="table table-striped">
+          <tr>
+            <th>Persoon Id</th>
+            <th>Kenteken</th>
+            <th>Km stand</th>
+            <th>Status</th>
+            <th>Datum</th>
+          </tr>
+          <tr>
+            <td th:text="${vehicle.customerId}">1</td>
+            <td th:text="${vehicle.numberPlate}">20-AB-12</td>
+            <td th:text="${vehicle.mileage}">20.000</td>
+            <td th:text="${maintenance.state}">NEW</td>
+            <td th:text="${maintenance.date}">20-12-20017</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Onderhoud Aanpassen</h3>
+      <div>
+        <form th:object="${maintenance}"
+              th:action="@{/onderhoud/(id=${maintenance.id})}"
+              method="post">
+          <div class="form-group">
+            <label for="state">Status: </label>
+            <select id="state" class="form-control" name="state" th:field="*{state}">
+              <!-- https://stackoverflow.com/questions/29515366/how-to-display-all-possible-enum-values-in-a-dropdown-list-using-spring-and-thym -->
+
+              <!--/*@thymesVar id="State" type="nl.yoboid.domain.entities.Maintenance.State"*/-->
+              <option th:each="state : ${T(nl.yoboid.domain.entities.Maintenance.State).values()}"
+                      th:value="${state}"
+                      th:text="${state}">RDW CHECK
+              </option>
+            </select>
+          </div>
+          <button class="btn btn-primary">Pas status aan</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:include="fragments/footer :: footer"></div>
+</body>
+</html>

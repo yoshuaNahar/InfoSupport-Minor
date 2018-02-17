@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="nl">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Yoboid: Voertuig</title>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet"
+        href="../static/style/style.css"
+        th:href="@{style/style.css}"/>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:include="fragments/header :: menu"></div>
+
+<div class="container">
+  <div class="alert alert-info">
+    <strong>Informatie!</strong> Voeg hier je voertuig toe.
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <form th:object="${vehicle}" th:action="@{/voertuig}" method="post">
+          <div class="form-group">
+            <label for="numberPlate">Kenteken: </label>
+            <input id="numberPlate" class="form-control" name="numberPlate"
+                   th:field="*{numberPlate}"/>
+          </div>
+          <div class="form-group">
+            <label for="mileage">Km stand: </label>
+            <input id="mileage" type="number" class="form-control" name="mileage"
+                   th:field="*{mileage}"/>
+          </div>
+          <div class="form-group">
+            <label for="customerId">Customer Id: </label>
+            <input id="customerId" type="number" class="form-control" name="customerId"
+                   th:field="*{customerId}"/>
+          </div>
+
+          <button class="btn btn-primary">Voertuig toevoegen</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:include="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.178.178:8863/maintenance?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    username: maintenance
+    password: maintenance
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  rabbitmq:
+    host: 192.168.178.178
+    port: 8860
+    username: yoboid
+    password: yoboid
+
+logging:
+  level:
+    ROOT: WARN
+    nl.yoboid: DEBUG
+
+---
+
+spring:
+  profiles: production
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://yoboid-maintenance-mysql:3306/maintenance?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    username: maintenance
+    password: maintenance
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  rabbitmq:
+    host: yoboid-rabbitmq
+    port: 5672
+    username: yoboid
+    password: yoboid
+
+logging:
+  level:
+    ROOT: WARN
+    nl.yoboid: DEBUG

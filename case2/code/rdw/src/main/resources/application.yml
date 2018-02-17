@@ -1,0 +1,59 @@
+spring:
+  rabbitmq:
+    host: 192.168.178.178
+    port: 8860
+    username: yoboid
+    password: yoboid
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.178.178:8864/rdw?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    username: rdw
+    password: rdw
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging:
+  level:
+    ROOT: WARN
+    nl.yoboid: DEBUG
+
+rdw:
+  rdw-service-ip: http://192.168.178.157:18423/rdw/APKKeuringsverzoek
+  sample-key: apk:steekproef
+  rdw-request-file: rdw-request.xml
+
+---
+
+spring:
+  profiles: production
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://yoboid-rdw-mysql:3306/rdw?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    username: rdw
+    password: rdw
+
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+
+  rabbitmq:
+    host: yoboid-rabbitmq
+    port: 5672
+    username: yoboid
+    password: yoboid
+
+logging:
+  level:
+    ROOT: WARN
+    nl.yoboid: DEBUG
+
+rdw:
+  rdw-service-ip: http://192.168.178.157:18423/rdw/APKKeuringsverzoek
+  sample-key: apk:steekproef
+  rdw-request-file: rdw-request.xml

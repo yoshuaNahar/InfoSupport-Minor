@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<apkKeuringsverzoekRequestMessage
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <keuringsverzoek correlatieId="0e27bf0f-885c-45b1-8b91-f29807c963af"
+                   xmlns="http://www.rdw.nl"
+                   xmlns:apk="http://www.rdw.nl/apk">
+    <voertuig
+      type="personenauto">
+      <kenteken>{numberPlate}</kenteken>
+      <kilometerstand>{mileage}</kilometerstand>
+      <naam>{customerId}</naam>
+    </voertuig>
+    <apk:keuringsdatum>2008-11-19</apk:keuringsdatum>
+    <apk:keuringsinstantie
+      type="garage" kvk="3013 5370">
+      <apk:naam>Garage Voorbeeld B.V.</apk:naam>
+      <apk:plaats>Wijk bij Voorbeeld</apk:plaats>
+    </apk:keuringsinstantie>
+  </keuringsverzoek>
+</apkKeuringsverzoekRequestMessage>

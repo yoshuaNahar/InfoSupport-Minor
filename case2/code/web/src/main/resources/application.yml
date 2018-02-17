@@ -1,0 +1,34 @@
+# Used for hot reloading thymeleaf while spring boot is running.
+# You need to recompile the html page you are editing for this to work
+spring:
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    ROOT: WARN
+    nl.yoboid: DEBUG
+
+service:
+  url:
+    vehicle: http://192.168.178.178:8872/vehicles
+    maintenance: http://192.168.178.178:8873/maintenances
+
+---
+
+# Used for hot reloading thymeleaf while spring boot is running.
+# You need to recompile the html page you are editing for this to work
+spring:
+  profiles: production
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    ROOT: WARN
+    nl.yoboid: DEBUG
+
+service:
+  url:
+    vehicle: http://yoboid-vehicle:8080/vehicles
+    maintenance: http://yoboid-maintenance:8080/maintenances

@@ -1,0 +1,80 @@
+pipeline {
+
+  agent any
+
+  options {
+    buildDiscarder(logRotator(numToKeepStr: "50"))
+    timestamps()
+  }
+
+  stages {
+
+    stage('Clean project') {
+      steps {
+        sh 'mvn clean'
+      }
+    }
+
+    stage('Coverage analysis') {
+      when {
+        branch 'develop'
+      }
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          sh 'mvn org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true'
+          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+        }
+      }
+    }
+
+    stage('Staging deploy to Docker') {
+      when {
+        branch 'develop'
+      }
+      steps {
+        dir ("env-staging") {
+          sh "docker-compose stop || true && docker-compose rm --force || true"
+          sh "docker-compose build"
+          sh "docker-compose up -d"
+        }
+      }
+    }
+
+    stage('PITest analysis') {
+      when {
+        branch 'master'
+      }
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          sh 'mvn org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true'
+          sh 'mvn install org.pitest:pitest-maven:mutationCoverage'
+          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar -Dsonar.pitest.mode=reuseReport'
+        }
+      }
+    }
+
+    stage('Upload artifacts to Nexus') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh 'mvn deploy -Dmaven.test.skip=true -Dmaven.install.skip=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -B'
+      }
+    }
+
+    stage('Production deploy to Docker') {
+      when {
+        branch 'master'
+      }
+      steps {
+        dir ("env-production") {
+          sh "docker-compose stop || true && docker-compose rm --force || true"
+          sh "docker-compose build"
+          sh "docker-compose push"
+          sh "docker-compose up -d"
+        }
+      }
+    }
+
+  }
+}

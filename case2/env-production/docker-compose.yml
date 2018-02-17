@@ -1,0 +1,150 @@
+version: '3'
+
+services:
+
+  yoboid-web:
+    container_name: yoboid-web
+    build: ../code/web
+    image: 192.168.178.178:8887/web
+    ports:
+      - 8840:8080
+    command:
+      - java
+      - -Dspring.profiles.active=production
+      - -jar
+      - /app.jar
+
+  yoboid-customer:
+    container_name: yoboid-customer
+    build: ../code/customer
+    image: 192.168.178.178:8887/customer
+    ports:
+      - 8841:8080
+    depends_on:
+      - yoboid-rabbitmq
+      - yoboid-customer-mysql
+    command:
+      - ./wait-for-it.sh
+      - yoboid-customer-mysql:3306
+      - --
+      - java
+      - -Dspring.profiles.active=production
+      - -jar
+      - /app.jar
+
+  yoboid-customer-mysql:
+    container_name: yoboid-customer-mysql
+    image: bitnami/mysql:latest
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=customer
+      - MYSQL_PASSWORD=customer
+      - MYSQL_DATABASE=customer
+    volumes:
+      - yoboid-customer-mysql-data:/bitnami
+
+  yoboid-vehicle:
+    container_name: yoboid-vehicle
+    build: ../code/vehicle
+    image: 192.168.178.178:8887/vehicle
+    ports:
+      - 8842:8080
+    depends_on:
+      - yoboid-rabbitmq
+      - yoboid-customer-mysql
+    command:
+      - ./wait-for-it.sh
+      - yoboid-vehicle-mysql:3306
+      - --
+      - java
+      - -Dspring.profiles.active=production
+      - -jar
+      - /app.jar
+
+  yoboid-vehicle-mysql:
+    container_name: yoboid-vehicle-mysql
+    image: bitnami/mysql:latest
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=vehicle
+      - MYSQL_PASSWORD=vehicle
+      - MYSQL_DATABASE=vehicle
+    volumes:
+      - yoboid-vehicle-mysql-data:/bitnami
+
+  yoboid-maintenance:
+    container_name: yoboid-maintenance
+    build: ../code/maintenance
+    image: 192.168.178.178:8887/maintenance
+    ports:
+      - 8843:8080
+    depends_on:
+      - yoboid-rabbitmq
+      - yoboid-maintenance-mysql
+    command:
+      - ./wait-for-it.sh
+      - yoboid-vehicle-mysql:3306
+      - --
+      - java
+      - -Dspring.profiles.active=production
+      - -jar
+      - /app.jar
+
+  yoboid-maintenance-mysql:
+    container_name: yoboid-maintenance-mysql
+    image: bitnami/mysql:latest
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=maintenance
+      - MYSQL_PASSWORD=maintenance
+      - MYSQL_DATABASE=maintenance
+    volumes:
+      - yoboid-maintenance-mysql-data:/bitnami
+
+  yoboid-rdw:
+    container_name: yoboid-rdw
+    build: ../code/rdw
+    image: 192.168.178.178:8887/rdw
+    ports:
+      - 8844:8080
+    depends_on:
+      - yoboid-rabbitmq
+      - yoboid-rdw-mysql
+    command:
+      - ./wait-for-it.sh
+      - yoboid-rdw-mysql:3306
+      - --
+      - java
+      - -Dspring.profiles.active=production
+      - -jar
+      - /app.jar
+
+  yoboid-rdw-mysql:
+    container_name: yoboid-rdw-mysql
+    image: bitnami/mysql:latest
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=rdw
+      - MYSQL_PASSWORD=rdw
+      - MYSQL_DATABASE=rdw
+    volumes:
+      - yoboid-rdw-mysql-data:/bitnami
+
+  yoboid-rabbitmq:
+    container_name: yoboid-rabbitmq
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=yoboid
+      - RABBITMQ_DEFAULT_PASS=yoboid
+    ports:
+      - 8830:15672
+
+volumes:
+  yoboid-customer-mysql-data: {}
+  yoboid-vehicle-mysql-data: {}
+  yoboid-maintenance-mysql-data: {}
+  yoboid-rdw-mysql-data: {}

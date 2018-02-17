@@ -1,0 +1,14 @@
+{
+  "vehicle": {
+    "id": 1,
+    "numberPlate": "20-AB-12",
+    "customerId": 4,
+    "mileage": 20000
+  },
+  "maintenance": {
+    "id": 2,
+    "vehicleId": 3,
+    "date": "2017-12-20",
+    "state": "NEW"
+  }
+}

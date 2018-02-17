@@ -1,0 +1,4 @@
+rdw:
+  rdw-service-ip: http://192.168.178.157:18423/rdw/APKKeuringsverzoek
+  sample-key: apk:steekproef
+  rdw-request-file: rdw-request.xml

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<apkKeuringsverzoekResponseMessage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <keuringsregistratie correlatieId="d8d02c27-1fd7-48e6-b296-a4bd2fa963f4" xmlns="http://www.rdw.nl" xmlns:apk="http://www.rdw.nl/apk">
+        <kenteken>BV-01-EG</kenteken>
+        <apk:keuringsdatum>2008-11-19</apk:keuringsdatum>
+        <apk:steekproef>2008-11-19</apk:steekproef>
+    </keuringsregistratie>
+</apkKeuringsverzoekResponseMessage>

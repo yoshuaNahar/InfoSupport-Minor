@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="nl">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Yoboid: Onderhoud Overzicht</title>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet"
+        href="../static/style/style.css"
+        th:href="@{style/style.css}"/>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:include="fragments/header :: menu"></div>
+
+<div class="container">
+  <div class="alert alert-info">
+    <strong>Informatie!</strong> Overzicht van alle onderhoud beurten.
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div th:if="${#lists.isEmpty(maintenanceViewEntities)}">
+        <h3>Geen data gevonden</h3>
+      </div>
+      <div th:if="${not #lists.isEmpty(maintenanceViewEntities)}"
+           class="well">
+        <h3>Onderhoud Overzicht</h3>
+        <table class="table table-striped">
+          <tr>
+            <th>Kenteken</th>
+            <th>Status</th>
+            <th>Datum</th>
+            <th>Detail Pagina</th>
+          </tr>
+          <tr th:each="maintenanceViewEntity : ${maintenanceViewEntities}">
+            <td th:text="${maintenanceViewEntity.numberPlate}">20-AB-12</td>
+            <td th:text="${maintenanceViewEntity.state}">NEW</td>
+            <td th:text="${maintenanceViewEntity.date}">20-12-20017</td>
+            <td>
+              <a href="maintenance_detail.html"
+                 th:href="@{/onderhoud/{id}(id=${maintenanceViewEntity.maintenanceId})}">Detail</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:include="fragments/footer :: footer"></div>
+</body>
+</html>
