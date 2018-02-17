@@ -18,6 +18,8 @@
     <module>week8_aop</module>
     <module>week9_threading</module>
     <module>week10_mastersofjava_demo</module>
+    <module>cucumberdemo</module>
+    <module>week9_concurrency</module>
   </modules>
 
   <properties>

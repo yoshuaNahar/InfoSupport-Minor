@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <cursistList>
-	<cursisten>
-		<cursisten>
-			<gebruikersnaam>Michiel</gebruikersnaam>
-			<email>MichielDeRuyter@mail.com</email>
-			<active>false</active>
-		</cursisten>
-		<cursisten>
-			<gebruikersnaam>Piet</gebruikersnaam>
-			<email>PietHein@mail.com</email>
-			<active>false</active>
-		</cursisten>
-	</cursisten>
+  <cursisten>
+    <cursisten>
+      <gebruikersnaam>Michiel</gebruikersnaam>
+      <email>MichielDeRuyter@mail.com</email>
+      <active>false</active>
+    </cursisten>
+    <cursisten>
+      <gebruikersnaam>Piet</gebruikersnaam>
+      <email>PietHein@mail.com</email>
+      <active>false</active>
+    </cursisten>
+  </cursisten>
 </cursistList>

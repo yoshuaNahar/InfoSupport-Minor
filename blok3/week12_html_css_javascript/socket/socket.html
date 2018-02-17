@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+<button>Send fake data</button>
+
+<script>
+  const socket = io();
+  socket.connect("192.168.178.185:4000");
+
+  document.querySelector("button").addEventListener("click", function () {
+    socket.emit('message', "test");
+    return false;
+  });
+  socket.on('message', function (msg) {
+    console.log(msg);
+    const div = document.createElement("div");
+    div.innerText = msg;
+    document.body.appendChild(div);
+  });
+</script>
+
+</body>
+</html>

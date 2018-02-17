@@ -1,0 +1,82 @@
+Important for toets:
+
+Web Component standard 4 categories:
+
+Html imports (deprecated for ecmascript modules)
+Templates
+Shadow dom
+Custom Elements
+
+==
+
+Browsers don't or have limited support for Web Components, except Chrome.
+Polyfill is a library that imitates the functionality with regular JavaScript.
+
+Polymer and XTag skatejs b 
+
+
+
+
+Domain Driven Design
+
+- Create a common language. Ubiquitous language, but what does that mean, real world example? I can't compare it with something I know
+- A domain can be expressed in different models, but choose a model which can be easily expressed in code.
+- People that build the model, should touch the code or be familiar with it. Anyone that writes code should know how to turn a model to code. (What is a model in this case? An UML diagram? Documents?)
+ 
+- Example: If you have a bank and a person entity. And 1 person sends money to someone else. Where do you place the transfer code? In de sender or de receiver? Neither. Create a Service and make it stateless.
+
+
+
+
+
+
+
+
+
+
+Concurrency control:
+Hoe de database omgaat met verschillende gebruikers die tegelijk lezen en schrijven naar de database
+
+Optimistic Concurrency control:
+Block geen data, laat alle threads tegelijk readen en writen naar dezelfde blok data
+
+Pesimistic: block data als een thread bezig is met readen of writen.
+
+What is aCId?
+?consistancy isolation? -> tables moeten goed 
+isolation -> asdasd moeten elkaar niet in de weg lopen
+
+apples.stream().collect(Collectors.groupingBy(Apple::getColor));
+
+
+With Volatile wordt variablen vanuit l1 cache naar main memory gebracht (of een plek waar alle threads erbij kunnen)
+
+Per core heb je een cache en als een variablen in de cache wordt opgeslagen is het niet hetzelfde als in de main memory.
+
+
+
+
+Synchronized gaat verder dan volitale in dat het de code afschrermt om data te lezen
+
+
+
+How does java memory work:
+
+Heap -> All object 
+Stack -> Alle methoden (ook static en threads)
+Data -> Static primitive instance variabelen en ?
+Code -> Classloaded code
+
+
+
+
+
+Set the documents that I should relearn in a special place... regex, tdd, jpa docs
+
+
+Evelyn is contact persoon Hogeschool Rotterdam. Met haar spreken wanneer ik vragen heb etc.
+
+
+
+School Blok 2: 
+ACID database concurrency control (Optimistic and Pesimistic is important)

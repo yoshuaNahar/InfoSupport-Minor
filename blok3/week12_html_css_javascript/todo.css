@@ -1,0 +1,16 @@
+body {
+  font-family: Ubuntu, sans-serif;
+}
+
+div#todo_list,
+div#todo_detail,
+div#todo_form,
+div#todo_file_select {
+  border: 2px solid black;
+  margin: 5px;
+  padding: 5px;
+}
+
+#todo_list > li {
+  cursor: pointer;
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "id": 0,
+    "title": "Cursus 1",
+    "cursusCode": "sd",
+    "duration": "4 uur",
+    "startDate": "2017-08-01",
+    "cursistList": []
+  },
+  {
+    "id": 0,
+    "title": "Cursus 2",
+    "cursusCode": "sd",
+    "duration": "4 uur",
+    "startDate": "2017-08-01",
+    "cursistList": []
+  }
+]

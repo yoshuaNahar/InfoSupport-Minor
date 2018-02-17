@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+        integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Ubuntu"/>
+  <link rel="stylesheet" href="todo.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script></head>
+<body>
+<div class="container">
+  <nav class="nav navbar-default">
+    <a href="#todo_list">Todo List</a>
+    <a href="#todo_detail">Todo Details</a>
+    <a href="#todo_form">Todo Form</a>
+  </nav>
+
+  <div class="row">
+    <div name="todo_list" id="todo_list" class="col-sm-3">
+      <h2>Todo List</h2>
+      <ul id="todo_list_ul" onclick="Todos.selectTodo()">
+      </ul>
+    </div>
+
+    <div name="todo_detail" id="todo_detail" class="col-sm-3">
+      <h2>Todo Detail</h2>
+      <div id="todo_description">
+      </div>
+    </div>
+
+    <div name="todo_form" id="todo_form" class="col-sm-3">
+      <h2>Todo Form</h2>
+      <div class="form-group">
+        <label for="title">Title: </label>
+        <input class="form-control" name="title" id="title" type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input class="form-control" name="description" id="description" type="text"/>
+      </div>
+
+      <button class="btn btn-primary" type="submit" onclick="Todos.saveTodo()">Add Todo</button>
+    </div>
+
+    <div id="todo_file_select" class="col-sm-3" ondragover="drag(event)" ondrop="drop(event)"
+         ondragend="dragend(event)">
+      Drop content here!<br>
+      Download todos: <button id="file" onclick="download()">Download current todos</button>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+<script>
+
+  console.log(`window.navigator.onLine: ${window.navigator.onLine}`);
+  window.addEventListener("online", () => {
+    console.log("we are now online!");
+  });
+  window.addEventListener("offline", () => {
+    console.log("we are now offline!");
+  });
+
+  // navigator.geolocation.getCurrentPosition((pos) => {
+  //   console.log('pos', pos);
+  //   fetch(
+  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.coords.latitude},${pos.coords.longitude}&key=AIzaSyBhg6VUR7kJVqIVzTT4SLCibbpQDwtyw3k`).then(
+  //       (res) => res.json()).then((data) => {
+  //     document.querySelector("footer").innerText = `${data.results[0].formatted_address}`;
+  //     document.querySelector("#img").src = "./babe.jpg";
+  //   })
+  // });
+
+  // PUSH NOTICATIONS
+  const applicationServerKey = urlB64ToUint8Array(
+      "BDjjueETb-hrVLOY0OAx5k4vQVP9HZxSyS4a7Jm7pY0p3WAtdcyy5ILQkV5AOSdjHhsEKnO5sbzQPpxwXoVWzqM");
+
+  navigator.serviceWorker.register('notificationSender.js').then((reg) => {
+    reg.pushManager.getSubscription().then((sub) => {
+      if (sub) {
+        console.log(`Subbie ${JSON.stringify(sub)}`);
+      }
+      else {
+        reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: applicationServerKey
+        }).then(function (subscription) {
+          console.log('User is subscribed.');
+          updateSubscriptionOnServer(subscription);
+          isSubscribed = true;
+          console.log(subscription);
+        }).catch((error) => {
+          console.log("error", error);
+        });
+      }
+    });
+  });
+
+  class Todos {
+
+    static saveTodo() {
+      const title = document.querySelector("input[name=title]").value;
+      const description = document.querySelector("input[name=description]").value;
+      const todo = {title: title, description: description};
+
+      todos.push(todo);
+      Todos.addTodoToList(todo);
+
+      localStorage["todos"] = JSON.stringify(todos);
+    }
+
+    static selectTodo() {
+      const details = document.querySelector("#todo_description");
+      details.innerHTML = `<h1>${event.target.todoItem.title}</h1><p>${event.target.todoItem.description}</p>`;
+    }
+
+    static addTodoToList(todo) {
+      const li = document.createElement("li");
+      li.innerText = todo.title;
+      li.todoItem = todo;
+      document.querySelector("#todo_list_ul").appendChild(li);
+    }
+
+  }
+
+  const todosString = localStorage["todos"] || "[]";
+  var todos = JSON.parse(todosString);
+  for (let todo of todos) {
+    Todos.addTodoToList(todo);
+  }
+
+  function urlB64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+  //
+  // Drag and drop files
+  //
+  function dragend(event) {
+    event.preventDefault();
+  }
+
+  function drag(event) {
+    event.preventDefault();
+  }
+
+  function drop(event) {
+    event.preventDefault();
+    const reader = new FileReader();
+    reader.onload = (content) => {
+      // document.querySelector("#drop").innerText = content.target.result;
+      console.log(content);
+      const todosStrings = content.currentTarget.result;
+
+      console.log(todosStrings);
+      console.log(`JSON.parse(todosStrings) ${JSON.parse(todosStrings)}`);
+      const todosFromFile = JSON.parse(todosStrings);
+
+      console.log(`todos now: ${todos}`);
+      todos = [];
+      console.log(`todos now: ${todos}`);
+
+      for (let todo of todosFromFile) {
+        Todos.addTodoToList(todo);
+      }
+    };
+    reader.readAsText(event.dataTransfer.files[0]);
+    console.log(`todos now: ${todos}`);
+
+  }
+
+  function download() {
+    const blob = new Blob(
+        [document.querySelector("#todo_list_ul").innerText],
+        {type: "text/plain"}
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = "display: none";
+    a.href = url;
+    a.download = 'data.txt';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  const socket = io("http://192.168.178.185:4000");
+  // document.querySelector("button").addEventListener("click", () => {
+  //   socket.emit('message', '');
+  //   return false;
+  // });
+  socket.on('message', (msg) => {
+    console.log(msg);
+    const div = document.createElement("div");
+    div.innerText = msg;
+    document.body.appendChild(div);
+  });
+</script>
+</body>
+</html>

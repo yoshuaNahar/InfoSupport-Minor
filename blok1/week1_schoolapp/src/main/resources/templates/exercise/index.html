@@ -23,15 +23,6 @@
         <div class="box-header">
           <h3 class="box-title">Overview</h3>
 
-          <!--<div class="box-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                  <div class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-              </div>
-          </div>-->
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
@@ -44,7 +35,8 @@
             </div>
 
             <div th:if="${success}" style="flex: 1; margin: 0 30px;">
-              <div layout:include="fragments/alert :: alert" th:with="type='success', header='Success!'" th:remove="tag">
+              <div layout:include="fragments/alert :: alert"
+                   th:with="type='success', header='Success!'" th:remove="tag">
                 <!--/* Implements alert summary fragment with full-blown HTML summary */-->
                 <th:block layout:fragment="alert-content">
                   <p th:text="${success}">Message</p>
@@ -52,8 +44,6 @@
               </div>
             </div>
           </div>
-
-
 
           <table class="table table-hover" id="exercises">
             <tbody>

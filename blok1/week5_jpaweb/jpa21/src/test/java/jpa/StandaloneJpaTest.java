@@ -303,7 +303,6 @@ public class StandaloneJpaTest {
     System.out.println(book.getReviews().size());
   }
 
-
   @Test
   public void testManyToMany() {
     createTestBooksWithAuthors();

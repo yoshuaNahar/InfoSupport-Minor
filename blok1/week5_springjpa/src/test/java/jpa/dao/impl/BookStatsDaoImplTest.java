@@ -21,11 +21,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = Config.class)
 public class BookStatsDaoImplTest {
 
-  @PersistenceContext
-  private EntityManager em;
-
   @Autowired
   public BookStatsDao bookStatsDao;
+  @PersistenceContext
+  private EntityManager em;
 
   @Before
   public void setup() {
